@@ -1,7 +1,7 @@
 package br.com.api.heydev.service.user;
 
-import br.com.api.heydev.dto.request.user.UserPostRequest;
-import br.com.api.heydev.dto.response.user.UserResponse;
+import br.com.api.heydev.dto.request.account.AccountPostRequest;
+import br.com.api.heydev.dto.response.account.AccountResponse;
 import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
 import br.com.api.heydev.service.IUserService;
@@ -16,19 +16,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class UserServiceCreateAccountTests {
     @Autowired
     private IUserService userService;
-    private UserPostRequest request;
-    private UserResponse expected;
-    private UserResponse actual;
+    private AccountPostRequest request;
+    private AccountResponse expected;
+    private AccountResponse actual;
 
     @BeforeEach
     void setup() {
-        this.request = new UserPostRequest("foo_tester", "foo@gmail.com", "footest123");
-        this.expected = new UserResponse(null, "foo_tester");
+        this.request = new AccountPostRequest("foo_tester", "foo@gmail.com", "footest123", "foo webtester");
+        this.expected = new AccountResponse(null, "foo_tester");
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        this.userService.deleteAccountById(this.actual.userId());
+        this.userService.deleteAccountById(this.actual.accountId());
     }
 
     @Test
@@ -39,17 +39,17 @@ public class UserServiceCreateAccountTests {
 
     @Test
     void failure_usernameAlreadyExist_400() throws Exception {
-        this.request = new UserPostRequest("foo_tester", "foo@gmail.com", "footest123");
+        this.request = new AccountPostRequest("foo_tester", "foo@gmail.com", "footest123", "foo webtester");
         this.actual = this.userService.createAccount(this.request);
-        this.request = new UserPostRequest("foo_tester", "foo2@gmail.com", "footest123");
+        this.request = new AccountPostRequest("foo_tester", "foo2@gmail.com", "footest123", "foo webtester");
         Assertions.assertThrows(UsernameAlreadyExistsException.class, () -> this.userService.createAccount(this.request));
     }
 
     @Test
     void failure_emailAlreadyExist_400() throws Exception {
-        this.request = new UserPostRequest("foo_tester", "foo@gmail.com", "footest123");
+        this.request = new AccountPostRequest("foo_tester", "foo@gmail.com", "footest123", "foo webtester");
         this.actual = this.userService.createAccount(this.request);
-        this.request = new UserPostRequest("aaaa", "foo@gmail.com", "footest123");
+        this.request = new AccountPostRequest("aaaa", "foo@gmail.com", "footest123", "foo webtester");
         Assertions.assertThrows(EmailAlreadyExistsException.class, () -> this.userService.createAccount(this.request));
     }
 }

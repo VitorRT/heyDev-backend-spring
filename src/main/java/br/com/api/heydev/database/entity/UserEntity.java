@@ -27,6 +27,8 @@ public class UserEntity {
     private String githubAPIKey;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private ProfileEntity profile;
 
     public UserEntity() {
 

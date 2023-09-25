@@ -105,7 +105,7 @@ Aqui estão os endpoints disponíveis para recursos relacionados à conta de usu
 
 1. Registrar uma conta de usuário
    - Método: **POST**
-   - Endpoint: /useraccount/create
+   - Endpoint: `/useraccount/create`
    - Possíveis Status: 201 (Criado), 400 (Requisição Inválida)
 
    
@@ -117,17 +117,63 @@ Aqui estão os endpoints disponíveis para recursos relacionados à conta de usu
    
 3. Atualizar username
    - Método: **PUT**
-   - Endpoint: `/useraccount/update/{userId}?username={username}`
+   - Endpoint: `/useraccount/update/{accountId}?username={username}`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
 
 
 4. Detalhes da conta de usuário
    - Método: **GET**
-   - Endpoint: `/useraccount/details/{userId}`
+   - Endpoint: `/useraccount/details/{accountId}`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
 
 
 5. Excluir conta de usuário
    - Método: **DELETE**
-   - Endpoint: `/useraccount/delete/{userId}`
+   - Endpoint: `/useraccount/delete/{accountId}`
    - Possíveis Status: 204 (Sem Conteúdo), 400 (Requisição Inválida)
+
+
+
+## Endpoints para Recursos de Perfil de Usuário
+Aqui estão os endpoints disponíveis para recursos relacionados ao perfil de usuário:
+
+1. Detalhes do perfil de usuário por id da conta
+   - Método: **GET**
+   - Endpoint: `/userprofile/details/{accountId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+2. Atualizar o nome social do perfil por id da conta
+   - Método: **PUT**
+   - Endpoint: `/userprofile/update/{accountId}?socialName={socialName}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+
+## Endpoints para Recursos de Imagem de Perfil
+Aqui estão os endpoints disponíveis para recursos relacionados a imagem de perfil do usuário:
+
+ps: Ao criar uma conta no endpoint `/useraccount/create` a api já cria um perfil e já atribui uma foto de perfil default a ela, então não existe o recurso de "criar foto de perfil", apenas os de visualização, download e update. Ao remover a foto perfil ela voltará a ser a foto default.
+
+1. Visualizar a foto de perfil
+   - Método: **GET**
+   - Endpoint: `/userprofile/image/show/{accountId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+2. Baixar foto de perfil
+   - Método: **GET**
+   - Endpoint: `/userprofile/image/download/{accountId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+3. Alterar foto de perfil
+   - Método: **PATCH**
+   - Endpoint: `/userprofile/image/update/{accountId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+4. Remover foto de perfil
+   - Método: **PATCH**
+   - Endpoint: `/userprofile/image/remove/{accountId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)

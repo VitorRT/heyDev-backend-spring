@@ -5,12 +5,15 @@ import br.com.api.heydev.dto.handler.CustomErrorResponse;
 import br.com.api.heydev.dto.handler.CustomValidationErrorResponse;
 import br.com.api.heydev.enums.InternalTypeErrorCodesEnum;
 import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
+import br.com.api.heydev.handler.exception.FileNotAnImageException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import java.util.ArrayList;
 
@@ -45,27 +48,33 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({UsernameAlreadyExistsException.class})
     public ResponseEntity<CustomErrorResponse> usernameAlreadyExistsExceptionHandler(UsernameAlreadyExistsException e) {
-        CustomErrorResponse error = CustomErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .isError(true)
-                .error(InternalTypeErrorCodesEnum.E410001.getMessage())
-                .code(InternalTypeErrorCodesEnum.E410001.getCode())
-                .build();
+        CustomErrorResponse error = buildCustomErrorResponse(e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
     }
 
     @ExceptionHandler({EmailAlreadyExistsException.class})
     public ResponseEntity<CustomErrorResponse> emailAlreadyExistsExceptionHandler(EmailAlreadyExistsException e) {
-        CustomErrorResponse error = CustomErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .isError(true)
-                .error(InternalTypeErrorCodesEnum.E410002.getMessage())
-                .code(InternalTypeErrorCodesEnum.E410002.getCode())
-                .build();
-
+        CustomErrorResponse error = buildCustomErrorResponse(e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
     }
 
+    @ExceptionHandler({EntityNotFoundException.class})
+    ResponseEntity<CustomErrorResponse> entityNotFoundExceptionHandler(EntityNotFoundException e) {
+        CustomErrorResponse error = buildCustomErrorResponse(e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler({FileNotAnImageException.class})
+    public ResponseEntity<CustomErrorResponse> fileNotAnImageExceptionHandler(FileNotAnImageException e) {
+        CustomErrorResponse error = buildCustomErrorResponse(e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler({MultipartException.class})
+    public ResponseEntity<CustomErrorResponse> multipartExceptionHandler(MultipartException e) {
+        CustomErrorResponse error =  buildCustomErrorResponseByErrorCode(InternalTypeErrorCodesEnum.E410015, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
     private InternalTypeErrorCodesEnum getInternalTypeErrorCodesEnumByCode(String errorCode) {
         for(InternalTypeErrorCodesEnum error : InternalTypeErrorCodesEnum.values()) {
@@ -74,5 +83,23 @@ public class GlobalExceptionHandler {
             }
         }
         return InternalTypeErrorCodesEnum.E500000;
+    }
+
+    private CustomErrorResponse buildCustomErrorResponse(Exception e) {
+        return CustomErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .isError(true)
+                .error(getInternalTypeErrorCodesEnumByCode(e.getMessage()).getMessage())
+                .code(e.getMessage())
+                .build();
+    }
+
+    private CustomErrorResponse buildCustomErrorResponseByErrorCode(InternalTypeErrorCodesEnum errorCode, String message) {
+        return CustomErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .isError(true)
+                .error(message)
+                .code(errorCode.getCode())
+                .build();
     }
 }

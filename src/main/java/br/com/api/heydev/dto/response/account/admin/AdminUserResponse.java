@@ -1,4 +1,4 @@
-package br.com.api.heydev.dto.response.user.admin;
+package br.com.api.heydev.dto.response.account.admin;
 
 import br.com.api.heydev.database.entity.UserEntity;
 

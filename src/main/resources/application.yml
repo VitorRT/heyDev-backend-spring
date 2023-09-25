@@ -1,13 +1,11 @@
 spring:
   datasource:
     url: jdbc:h2:mem:heydev
-    user: sa
+    username: sa
     password:
     driverClassname: org.h2.Driver
   jpa:
-    spring:
-      jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
   h2:
     console:
       enabled: true
@@ -16,4 +14,9 @@ spring:
         trace: false
         web-allow-others: false 
   profiles:
-    active: prod
+    active: dev
+
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB

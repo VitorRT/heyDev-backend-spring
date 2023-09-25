@@ -1,10 +1,9 @@
 package br.com.api.heydev.controller;
 
-import br.com.api.heydev.dto.request.user.UserPostRequest;
-import br.com.api.heydev.dto.response.user.UserResponse;
-import br.com.api.heydev.dto.response.user.admin.AdminUserResponse;
+import br.com.api.heydev.dto.request.account.AccountPostRequest;
+import br.com.api.heydev.dto.response.account.AccountResponse;
+import br.com.api.heydev.dto.response.account.admin.AdminUserResponse;
 import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
-import br.com.api.heydev.handler.exception.UserNotFoundException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,7 +32,7 @@ public interface IUserController {
                     @ApiResponse(responseCode = "400", description = "Erro ao cadastrar uma conta", content = @Content),
             }
     )
-    ResponseEntity<UserResponse> createAccount(@RequestBody @Valid UserPostRequest request)
+    ResponseEntity<AccountResponse> createAccount(@RequestBody @Valid AccountPostRequest request)
             throws UsernameAlreadyExistsException, EmailAlreadyExistsException;
 
     @Operation(
@@ -59,10 +58,10 @@ public interface IUserController {
                     @ApiResponse(responseCode = "400", description = "Erro ao atualizar o username.", content = @Content),
             }
     )
-    ResponseEntity<UserResponse> updateUsername(
-            @PathVariable(value = "userId") UUID userId,
+    ResponseEntity<AccountResponse> updateUsername(
+            @PathVariable(value = "accountId") UUID userId,
             @RequestParam(name = "username", required = true) @NotBlank String username)
-            throws UserNotFoundException, UsernameAlreadyExistsException;
+            throws UsernameAlreadyExistsException;
 
     @Operation(
             summary = "Deleção de uma conta de usuário.",
@@ -74,7 +73,7 @@ public interface IUserController {
                     @ApiResponse(responseCode = "400", description = "Erro ao deletar a conta.", content = @Content),
             }
     )
-    ResponseEntity<String> deleteAccountById(@PathVariable(value = "userId") UUID userId) throws UserNotFoundException;
+    ResponseEntity<String> deleteAccountById(@PathVariable(value = "accountId") UUID userId);
 
     @Operation(
             summary = "Detalhamento de uma conta de usupario.",
@@ -86,6 +85,6 @@ public interface IUserController {
                     @ApiResponse(responseCode = "400", description = "Erro ao detalhar o usuário.", content = @Content),
             }
     )
-    ResponseEntity<UserResponse> detailsAccountById(@PathVariable(value = "userId") UUID userId) throws UserNotFoundException;
+    ResponseEntity<AccountResponse> detailsAccountById(@PathVariable(value = "accountId") UUID userId);
 
 }

@@ -1,7 +1,7 @@
 package br.com.api.heydev.service.user;
 
-import br.com.api.heydev.dto.request.user.UserPostRequest;
-import br.com.api.heydev.dto.response.user.UserResponse;
+import br.com.api.heydev.dto.request.account.AccountPostRequest;
+import br.com.api.heydev.dto.response.account.AccountResponse;
 import br.com.api.heydev.service.IUserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -14,26 +14,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class UserServiceUpdateUsernameAccountTests {
     @Autowired
     private IUserService userService;
-    private UserPostRequest request;
-    private UserResponse user;
-    private UserResponse expected;
+    private AccountPostRequest request;
+    private AccountResponse user;
+    private AccountResponse expected;
 
     @BeforeEach
     void setup() throws Exception {
-        this.request = new UserPostRequest("foo_tester","foo@gmail.com","foo123");
+        this.request = new AccountPostRequest("foo_tester","foo@gmail.com","foo123", "foo webtester");
         this.user = this.userService.createAccount(this.request);
-        this.expected = new UserResponse(null, "foo_tester2");
+        this.expected = new AccountResponse(null, "foo_tester2");
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        this.userService.deleteAccountById(this.user.userId());
+        this.userService.deleteAccountById(this.user.accountId());
     }
 
     @Test
     void success_usernameUpdated_200() throws Exception {
         String newUsername = "foo_tester2";
-        UserResponse actual = this.userService.updateUsername(this.user.userId(), newUsername);
+        AccountResponse actual = this.userService.updateUsername(this.user.accountId(), newUsername);
 
         Assertions.assertEquals(this.expected.username(), actual.username());
     }
@@ -41,20 +41,20 @@ public class UserServiceUpdateUsernameAccountTests {
     @Test
     void success_usernameSameUpdated_200() throws Exception {
         String sameUsername = "foo_tester";
-        UserResponse actual = this.userService.updateUsername(this.user.userId(), sameUsername);
+        AccountResponse actual = this.userService.updateUsername(this.user.accountId(), sameUsername);
 
         Assertions.assertEquals(this.user.username(), sameUsername);
     }
 
     @Test
     void failure_usernameExists_400() throws Exception {
-        UserPostRequest userTwo = new UserPostRequest("mirela", "mirela.cunha@gmail.com", "batata123");
-        UserResponse userTwoResponse = this.userService.createAccount(userTwo);
+        AccountPostRequest userTwo = new AccountPostRequest("mirela", "mirela.cunha@gmail.com", "batata123", "foo webtester");
+        AccountResponse userTwoResponse = this.userService.createAccount(userTwo);
 
         String usernameExists = "mirela";
 
         Assertions.assertThrows(Exception.class, () ->
-            this.userService.updateUsername(this.user.userId(), usernameExists)
+            this.userService.updateUsername(this.user.accountId(), usernameExists)
         );
     }
 }
