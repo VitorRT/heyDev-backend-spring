@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,8 @@ public class UserEntity {
     private LocalDateTime updatedAt = LocalDateTime.now();
     @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private ProfileEntity profile;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private List<PostEntity> posts;
 
     public UserEntity() {
 

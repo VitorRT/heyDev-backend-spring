@@ -2,7 +2,7 @@ package br.com.api.heydev.enums;
 
 public enum InternalTypeErrorCodesEnum {
     E500000("500.000", "Internal error without mapped cause."),
-    E410000("410.000","user not found."),
+    E410000("410.000","user account not found."),
     E410001("410.001", "username already exists."),
     E410002("410.002", "email already exists."),
     E410003("410.003","validation error type."),
@@ -17,7 +17,10 @@ public enum InternalTypeErrorCodesEnum {
     E410012("410.012", "please send an image."),
     E410013("410.013", "an error occurred while uploading the image."),
     E410014("410.014", "profile not found."),
-    E410015("410.015", "please send a file in the parameter called \"file\".")
+    E410015("410.015", "please send a file in the parameter called \"file\"."),
+    E410016("410.016", "post not found."),
+    E410017("410.017", "post content is mandatory."),
+    E410018("410.018", "user account id is mandatory.")
     ;
 
     private final String code;

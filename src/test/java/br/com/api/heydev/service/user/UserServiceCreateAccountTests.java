@@ -32,7 +32,7 @@ public class UserServiceCreateAccountTests {
     }
 
     @Test
-    void success_createAccount_200() throws Exception {
+    void success_createAccount_201() throws Exception {
         this.actual = this.userService.createAccount(this.request);
         Assertions.assertEquals(this.expected.username(), this.actual.username());
     }
