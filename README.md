@@ -177,3 +177,31 @@ ps: Ao criar uma conta no endpoint `/useraccount/create` a api já cria um perfi
    - Método: **PATCH**
    - Endpoint: `/userprofile/image/remove/{accountId}`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+## Endpoints para Recursos de Postagem
+Aqui estão os endpoints disponíveis para recursos relacionados a postagem:
+
+1. Criar postagem
+   - Método: **POST**
+   - Endpoint: `/post/create`
+   - Possíveis Status: 201 (Criado), 400 (Requisição Inválida)
+
+
+2. Detalhar dados de uma postagem
+   - Método: **GET**
+   - Endpoint: `/post/details/{postId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+3. Alterar conteúdo de uma postagem
+   - Método: **PUT**
+   - Endpoint: `/post/update/{postId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+4. Deletar uma postagem
+   - Método: **DELETE**
+   - Endpoint: `/post/delete/{postId}`
+   - Possíveis Status: 204 (Sem conteudo), 400 (Requisição Inválida)
+
