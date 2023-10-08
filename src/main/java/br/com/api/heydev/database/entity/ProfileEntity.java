@@ -26,4 +26,5 @@ public class ProfileEntity {
     @OneToOne
     @JoinColumn(name = "user_fk")
     private UserEntity user;
+
 }

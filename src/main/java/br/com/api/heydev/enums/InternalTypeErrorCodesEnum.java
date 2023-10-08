@@ -20,7 +20,10 @@ public enum InternalTypeErrorCodesEnum {
     E410015("410.015", "please send a file in the parameter called \"file\"."),
     E410016("410.016", "post not found."),
     E410017("410.017", "post content is mandatory."),
-    E410018("410.018", "user account id is mandatory.")
+    E410018("410.018", "user account id is mandatory."),
+    E410019("410.019", "comment not found."),
+    E410020("410.020", "comment content is mandatory."),
+    E41021("410.021", "post id is mandatory.")
     ;
 
     private final String code;

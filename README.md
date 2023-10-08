@@ -205,3 +205,24 @@ Aqui estão os endpoints disponíveis para recursos relacionados a postagem:
    - Endpoint: `/post/delete/{postId}`
    - Possíveis Status: 204 (Sem conteudo), 400 (Requisição Inválida)
 
+
+
+## Endpoints para Recursos de Comentário de uma Postagem
+Aqui estão os endpoints disponíveis para recursos relacionados ao comentário de uma  postagem:
+
+1. Criar Comentário
+   - Método: **POST**
+   - Endpoint: `/post/comment/create`
+   - Possíveis Status: 201 (Criado), 400 (Requisição Inválida)
+
+
+2. Editar um comentário
+   - Método: **PATCH**
+   - Endpoint: `/post/comment/update/{comnentId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+4. Deletar um comentário
+   - Método: **DELETE**
+   - Endpoint: `/post/comment/delete/{commentId}`
+   - Possíveis Status: 204 (Sem conteudo), 400 (Requisição Inválida)

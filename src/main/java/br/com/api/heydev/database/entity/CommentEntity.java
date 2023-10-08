@@ -4,31 +4,34 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "comments")
 @Data
-public class PostEntity {
+public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID postId;
+    private UUID commentId;
 
     @Lob
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "post_fk")
+    private PostEntity post;
+
+    @ManyToOne
     @JoinColumn(name = "user_fk")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CommentEntity> comments;
-
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public PostEntity() {
+    private Boolean edited = false;
 
-    }
+    public CommentEntity() { }
 }
