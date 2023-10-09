@@ -218,11 +218,27 @@ Aqui estão os endpoints disponíveis para recursos relacionados ao comentário 
 
 2. Editar um comentário
    - Método: **PATCH**
-   - Endpoint: `/post/comment/update/{comnentId}`
+   - Endpoint: `/post/comment/update/{commentId}`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
 
 
-4. Deletar um comentário
+3. Deletar um comentário
    - Método: **DELETE**
    - Endpoint: `/post/comment/delete/{commentId}`
    - Possíveis Status: 204 (Sem conteudo), 400 (Requisição Inválida)
+
+
+
+## Endpoints para Recursos de Curtida de uma Postagem
+Aqui estão os endpoints disponíveis para recursos relacionados a curtida de uma postagem:
+
+1. Curtir uma Postagem
+   - Método: **POST**
+   - Endpoint: `/post/like/create`
+   - Possíveis Status: 201 (Criado), 400 (Requisição Inválida)
+
+
+2. Remover uma Curtida de uma Postagem
+   - Método: **DELETE**
+   - Endpoint: `/post/like/delete/{likeId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)

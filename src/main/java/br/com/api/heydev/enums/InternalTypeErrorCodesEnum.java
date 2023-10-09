@@ -23,7 +23,9 @@ public enum InternalTypeErrorCodesEnum {
     E410018("410.018", "user account id is mandatory."),
     E410019("410.019", "comment not found."),
     E410020("410.020", "comment content is mandatory."),
-    E41021("410.021", "post id is mandatory.")
+    E410021("410.021", "post id is mandatory."),
+    E410022("410.022", "post like not found."),
+    E410023("410.023", "like already exists.")
     ;
 
     private final String code;

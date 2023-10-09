@@ -3,12 +3,14 @@ package br.com.api.heydev.database.entity;
 import br.com.api.heydev.enums.ProfileRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "profiles")
 @Data
+@EqualsAndHashCode(of = {"profileId"})
 public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

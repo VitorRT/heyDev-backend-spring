@@ -6,6 +6,7 @@ import br.com.api.heydev.dto.handler.CustomValidationErrorResponse;
 import br.com.api.heydev.enums.InternalTypeErrorCodesEnum;
 import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
 import br.com.api.heydev.handler.exception.FileNotAnImageException;
+import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -73,6 +74,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({MultipartException.class})
     public ResponseEntity<CustomErrorResponse> multipartExceptionHandler(MultipartException e) {
         CustomErrorResponse error =  buildCustomErrorResponseByErrorCode(InternalTypeErrorCodesEnum.E410015, e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler({LikeAlreadyExistsException.class})
+    public ResponseEntity<CustomErrorResponse> likeAlreadyExistsExceptionHandler(LikeAlreadyExistsException e) {
+        CustomErrorResponse error = buildCustomErrorResponseByErrorCode(
+                getInternalTypeErrorCodesEnumByCode(e.getMessage()),
+                getInternalTypeErrorCodesEnumByCode(e.getMessage()).getMessage()
+        );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 

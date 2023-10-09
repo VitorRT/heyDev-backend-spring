@@ -2,12 +2,14 @@ package br.com.api.heydev.database.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "profile_image_attachments")
 @Data
+@EqualsAndHashCode(of = {"profileImageAttId"})
 public class ProfileImageAttachmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

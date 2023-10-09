@@ -1,17 +1,17 @@
 package br.com.api.heydev.database.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 @Data
+@EqualsAndHashCode(of = {"userId", "username", "email"})
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,10 +40,13 @@ public class UserEntity {
     private ProfileEntity profile;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    private List<PostEntity> posts;
+    private Set<PostEntity> posts;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    private List<CommentEntity> comments;
+    private Set<CommentEntity> comments;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private Set<PostLikeEntity> postLikes;
 
     public UserEntity() {
 

@@ -2,6 +2,7 @@ package br.com.api.heydev.database.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "comments")
 @Data
+@EqualsAndHashCode(of = {"commentId"})
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
