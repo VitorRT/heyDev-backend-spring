@@ -18,6 +18,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -89,6 +90,8 @@ public class UserServiceImpl implements IUserService {
     public void deleteAccountById(UUID userId) {
         UserEntity userEntity = getUserById(userId);
         this.userRepository.delete(userEntity);
+
+        log.info("[ DB Delete ] - account successfully deleted in {}.", LocalDateTime.now());
     }
 
     @Override

@@ -242,3 +242,19 @@ Aqui estão os endpoints disponíveis para recursos relacionados a curtida de um
    - Método: **DELETE**
    - Endpoint: `/post/like/delete/{likeId}`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+
+## Endpoints para Recursos de Curtida de um Comentário
+Aqui estão os endpoints disponíveis para recursos relacionados a curtida de um comentário:
+
+1. Curtir um Comentário
+   - Método: **POST**
+   - Endpoint: `/comment/like/create`
+   - Possíveis Status: 201 (Criado), 400 (Requisição Inválida)
+
+
+2. Remover uma Curtida de um Comentário
+   - Método: **DELETE**
+   - Endpoint: `/comment/like/delete/{likeId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)

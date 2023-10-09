@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +35,9 @@ public class CommentEntity {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     private Boolean edited = false;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<CommentLikeEntity> likes;
 
     public CommentEntity() { }
 }

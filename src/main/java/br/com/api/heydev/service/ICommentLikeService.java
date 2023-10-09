@@ -5,7 +5,7 @@ import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 
 import java.util.UUID;
 
-public interface IPostLikeService {
-    LikeResponse like(UUID postId, UUID userAccountId) throws LikeAlreadyExistsException;
-    void removeLike(UUID likePostId);
+public interface ICommentLikeService {
+    LikeResponse like(UUID userAccountId, UUID commentId) throws LikeAlreadyExistsException;
+    void removeLike(UUID likeId);
 }

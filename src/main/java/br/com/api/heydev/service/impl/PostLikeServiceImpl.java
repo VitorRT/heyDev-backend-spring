@@ -6,7 +6,7 @@ import br.com.api.heydev.database.entity.UserEntity;
 import br.com.api.heydev.database.repository.IPostLikeRepository;
 import br.com.api.heydev.database.repository.IPostRepository;
 import br.com.api.heydev.database.repository.IUserRepository;
-import br.com.api.heydev.dto.response.postLike.PostLikeResponse;
+import br.com.api.heydev.dto.response.like.LikeResponse;
 import br.com.api.heydev.enums.InternalTypeErrorCodesEnum;
 import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 import br.com.api.heydev.service.IPostLikeService;
@@ -34,7 +34,7 @@ public class PostLikeServiceImpl implements IPostLikeService {
     }
 
     @Override
-    public PostLikeResponse like(UUID postId, UUID userAccountId) throws LikeAlreadyExistsException {
+    public LikeResponse like(UUID postId, UUID userAccountId) throws LikeAlreadyExistsException {
         UserEntity user = getUserEntityById(userAccountId);
         PostEntity post = getPostEntityById(postId);
 
@@ -47,7 +47,7 @@ public class PostLikeServiceImpl implements IPostLikeService {
 
         PostLikeEntity persisted = likeRepository.saveAndFlush(entity);
         log.info("[ DB Persist ] - post successfully liked by: {}", user.getUsername());
-        return new PostLikeResponse(persisted.getPostLikeId());
+        return new LikeResponse(persisted.getPostLikeId());
     }
 
     @Override

@@ -5,6 +5,7 @@ import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
 import br.com.api.heydev.service.ICommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post/comment")
+@Tag(name = "Comment 💬")
 public class CommentControllerImpl implements ICommentController {
     private ICommentService service;
 

@@ -66,7 +66,7 @@ public class PostServiceImpl implements IPostService {
         PostEntity postEntity = getPostEntityById(postId);
         repository.delete(postEntity);
 
-        log.info("[ DB Delete ] - Post successfully deleted!");
+        log.info("[ DB Delete ] - Post successfully deleted {}.", LocalDateTime.now());
     }
 
     private UserEntity getUserEntityById(UUID userAccountId) {

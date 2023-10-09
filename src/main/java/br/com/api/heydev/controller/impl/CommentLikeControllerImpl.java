@@ -1,9 +1,9 @@
 package br.com.api.heydev.controller.impl;
 
-import br.com.api.heydev.controller.IPostLikeController;
+import br.com.api.heydev.controller.ICommentLikeController;
 import br.com.api.heydev.dto.response.like.LikeResponse;
 import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
-import br.com.api.heydev.service.IPostLikeService;
+import br.com.api.heydev.service.ICommentLikeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/post/like")
-@Tag(name = "Post Like 📝👍")
-public class PostLikeControllerImpl implements IPostLikeController {
-    private IPostLikeService service;
+@RequestMapping("/comment/like")
+@Tag(name = "Comment Like 💬👍")
+public class CommentLikeControllerImpl implements ICommentLikeController {
+    private ICommentLikeService service;
 
     @Deprecated
-    public PostLikeControllerImpl(IPostLikeService service) {
+    public CommentLikeControllerImpl(ICommentLikeService service) {
         this.service = service;
     }
 
     @PostMapping(value = "/create", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<LikeResponse> like(UUID userAccountId, UUID postId) throws LikeAlreadyExistsException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.like(postId, userAccountId));
+    public ResponseEntity<LikeResponse> like(UUID userAccountId, UUID commentId) throws LikeAlreadyExistsException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.like(userAccountId, commentId));
     }
 
     @DeleteMapping(value = "/delete/{likeId}")

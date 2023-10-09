@@ -11,25 +11,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
-public interface IPostLikeController {
-
+public interface ICommentLikeController {
     @Operation(
-            summary = "Curtir uma postagem.",
-            description = "Curtir uma postagem passando o id da conta e o id da postagem por parâmetro da requisição."
+            summary = "Curtir um comentário.",
+            description = "Curtir um comentário passando o id da conta e o id do comentário por parâmetro da requisição."
     )
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "201", description = "Postagem curtido com sucesso."),
+                    @ApiResponse(responseCode = "201", description = "Comentário curtido com sucesso."),
                     @ApiResponse(responseCode = "400", description = "Requisição inválida.")
             }
     )
-    ResponseEntity<LikeResponse> like(@RequestParam(name = "account_id", required = true) UUID userAccountId,
-                                      @RequestParam(name = "post_id", required = true) UUID postId)
-            throws LikeAlreadyExistsException;
+    ResponseEntity<LikeResponse> like(
+            @RequestParam(name = "account_id", required = true) UUID userAccountId,
+            @RequestParam(name = "comment_id", required = true) UUID commentId
+            ) throws LikeAlreadyExistsException;
 
     @Operation(
-            summary = "Remover uma curtida uma postagem.",
-            description = "Remoção de uma curtida uma postagem passando o id da curtida em uma variável da requisição."
+            summary = "Remover uma curtida de um comentário.",
+            description = "Remoção de uma curtida de um comentário passando o id da curtida em uma variável da requisição."
     )
     @ApiResponses(
             value = {
@@ -37,5 +37,7 @@ public interface IPostLikeController {
                     @ApiResponse(responseCode = "400", description = "Requisição inválida.")
             }
     )
-    ResponseEntity<Void> removeLike(@PathVariable("likeId") UUID likeId);
+    ResponseEntity<Void> removeLike(
+            @PathVariable(value = "likeId") UUID likeId
+    );
 }

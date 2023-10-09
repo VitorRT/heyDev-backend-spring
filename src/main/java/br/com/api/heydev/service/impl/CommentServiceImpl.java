@@ -64,7 +64,7 @@ public class CommentServiceImpl implements ICommentService {
         CommentEntity commentEntity = getCommentEntityById(commentId);
         commentRepository.delete(commentEntity);
 
-        log.info("[ DB Delete ] - Comment successfully deleted.");
+        log.info("[ DB Delete ] - Comment successfully deleted {}.", LocalDateTime.now());
     }
 
     private CommentEntity getCommentEntityById(UUID commentId){

@@ -5,6 +5,7 @@ import br.com.api.heydev.dto.request.post.PostRequest;
 import br.com.api.heydev.dto.request.post.PostUpdateRequest;
 import br.com.api.heydev.dto.response.post.PostResponse;
 import br.com.api.heydev.service.IPostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/post")
+@Tag(name = "Post 📝")
 public class PostContollerImpl implements IPostController {
     private IPostService service;
 

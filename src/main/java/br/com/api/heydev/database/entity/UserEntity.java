@@ -48,6 +48,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Set<PostLikeEntity> postLikes;
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private Set<CommentLikeEntity> commentLikes;
+
     public UserEntity() {
 
     }
