@@ -39,5 +39,12 @@ public class CommentEntity {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CommentLikeEntity> likes;
 
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<CommentEntity> childComments;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "parent_comment_fk")
+    private CommentEntity parentComment;
+
     public CommentEntity() { }
 }

@@ -6,6 +6,7 @@ import br.com.api.heydev.database.entity.UserEntity;
 import br.com.api.heydev.database.repository.ICommentRepository;
 import br.com.api.heydev.database.repository.IPostRepository;
 import br.com.api.heydev.database.repository.IUserRepository;
+import br.com.api.heydev.dto.request.comment.CommentInCommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
@@ -57,6 +58,24 @@ public class CommentServiceImpl implements ICommentService {
         CommentEntity persisted = commentRepository.saveAndFlush(commentEntity);
         log.info("[ DB Persist ] - Comment successfully updated.");
         return new CommentResponse(persisted);
+    }
+
+    @Override
+    public CommentResponse commentInComment(CommentInCommentPostRequest request) {
+        CommentEntity commentEntity = getCommentEntityById(request.parentCommentId());
+        UserEntity user = getUserEntityById(request.userAccountId());
+
+        CommentEntity commentInCommentEntity = new CommentEntity();
+
+        commentInCommentEntity.setUser(user);
+        commentInCommentEntity.setPost(commentEntity.getPost());
+        commentInCommentEntity.setContent(request.content());
+        commentInCommentEntity.setParentComment(commentEntity);
+
+        var persited = commentRepository.saveAndFlush(commentInCommentEntity);
+
+        log.info("[ DB Persist ] - create a comment in comment: {}", commentEntity.getCommentId());
+        return new CommentResponse(persited);
     }
 
     @Override

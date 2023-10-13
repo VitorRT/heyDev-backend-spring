@@ -226,7 +226,12 @@ Aqui estão os endpoints disponíveis para recursos relacionados ao comentário 
    - Método: **DELETE**
    - Endpoint: `/post/comment/delete/{commentId}`
    - Possíveis Status: 204 (Sem conteudo), 400 (Requisição Inválida)
+   
 
+4. Comentar em um comentário
+   - Método: **POST**
+   - Endpoint: `/post/comment/create/incomment`
+   - Possíveis Status: 201 (Sucesso), 400 (Requisição Inválida)
 
 
 ## Endpoints para Recursos de Curtida de uma Postagem

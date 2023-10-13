@@ -1,6 +1,7 @@
 package br.com.api.heydev.controller.impl;
 
 import br.com.api.heydev.controller.ICommentController;
+import br.com.api.heydev.dto.request.comment.CommentInCommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
@@ -31,6 +32,11 @@ public class CommentControllerImpl implements ICommentController {
     @PatchMapping(value = "/update/{commentId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CommentResponse> updateComment(UUID commentId, CommentUpdateRequest request) {
         return ResponseEntity.ok(service.updateComment(commentId, request));
+    }
+
+    @PostMapping(value = "/create/incomment")
+    public ResponseEntity<CommentResponse> commentInComment(CommentInCommentPostRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.commentInComment(request));
     }
 
     @DeleteMapping(value = "delete/{commentId}")
