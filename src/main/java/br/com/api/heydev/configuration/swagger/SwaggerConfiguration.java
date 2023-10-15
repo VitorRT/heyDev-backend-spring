@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfiguration {
+
     @Bean
     public OpenAPI configure() {
         Contact contact = new Contact();

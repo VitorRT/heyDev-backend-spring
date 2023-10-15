@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,8 +33,10 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/swagger-ui/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
+
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form.disable())
+                .cors(config -> config.disable())
                 .userDetailsService(userDetailsService())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .build();
@@ -52,5 +55,10 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         return new AuthorizationService();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**");
     }
 }
