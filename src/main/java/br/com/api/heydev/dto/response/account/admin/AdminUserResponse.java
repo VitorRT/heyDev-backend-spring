@@ -16,7 +16,7 @@ public record AdminUserResponse(
     public AdminUserResponse(UserEntity userEntity) {
         this(
                 userEntity.getUserId(),
-                userEntity.getUsername(),
+                userEntity.getUsernameAccount(),
                 userEntity.getEmail(),
                 userEntity.getGithubConnected(),
                 userEntity.getCreatedAt(),

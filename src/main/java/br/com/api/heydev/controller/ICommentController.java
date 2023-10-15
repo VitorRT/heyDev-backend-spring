@@ -67,5 +67,15 @@ public interface ICommentController {
     )
     ResponseEntity<Void> deleteComment(@PathVariable("commentId") UUID commentId);
 
+    @Operation(
+            summary = "Listar todos os comentários de uma postagem pelo id da postagem.",
+            description = "Listagem de todos os dados dos comentários de uma postagem pelo id da postagem."
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Comentários retornados com sucesso."),
+                    @ApiResponse(responseCode = "400", description = "Requisição inválida.")
+            }
+    )
     ResponseEntity<List<CommentFeedResponse>> getAllCommentsByPostId(@PathVariable("postId") UUID postId);
 }

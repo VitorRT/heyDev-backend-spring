@@ -8,6 +8,9 @@ import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
 import br.com.api.heydev.handler.exception.FileNotAnImageException;
 import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -82,6 +86,24 @@ public class GlobalExceptionHandler {
         CustomErrorResponse error = buildCustomErrorResponseByErrorCode(
                 getInternalTypeErrorCodesEnumByCode(e.getMessage()),
                 getInternalTypeErrorCodesEnumByCode(e.getMessage()).getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler({JWTDecodeException.class, JWTCreationException.class, JWTVerificationException.class})
+    public ResponseEntity<CustomErrorResponse> jwtDecodeException(Exception e) {
+        CustomErrorResponse error = buildCustomErrorResponseByErrorCode(
+                getInternalTypeErrorCodesEnumByCode("410.025"),
+                getInternalTypeErrorCodesEnumByCode("410.025").getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<CustomErrorResponse> noSuchElementException(NoSuchElementException e) {
+        CustomErrorResponse error = buildCustomErrorResponseByErrorCode(
+                getInternalTypeErrorCodesEnumByCode("410.026"),
+                getInternalTypeErrorCodesEnumByCode("410.026").getMessage()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

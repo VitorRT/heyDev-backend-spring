@@ -46,7 +46,7 @@ public class PostLikeServiceImpl implements IPostLikeService {
         entity.setCreated(LocalDateTime.now());
 
         PostLikeEntity persisted = likeRepository.saveAndFlush(entity);
-        log.info("[ DB Persist ] - post successfully liked by: {}", user.getUsername());
+        log.info("[ DB Persist ] - post successfully liked by: {}", user.getUsernameAccount());
         return new LikeResponse(persisted.getPostLikeId());
     }
 
