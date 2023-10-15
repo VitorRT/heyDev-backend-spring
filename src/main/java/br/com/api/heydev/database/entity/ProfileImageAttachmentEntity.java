@@ -22,6 +22,10 @@ public class ProfileImageAttachmentEntity {
     @Column(name = "image_name")
     private String imageName;
 
+    @Column(name = "show_url")
+    @Lob
+    private String showUrl;
+
     @Column(name = "is_default", nullable = false)
     private Boolean isDefault;
 

@@ -74,6 +74,7 @@ public class ProfileImageAttachmentServiceImpl implements IProfileImageAttachmen
             profileAttachment.setImageName(fileName);
             profileAttachment.setAttachment(defaultImageBytes);
             profileAttachment.setIsDefault(true);
+            profileAttachment.setShowUrl(fileShowUri);
             ProfileImageAttachmentEntity profileImagePersisted = imageAttachmentRepository.saveAndFlush(profileAttachment);
 
             ProfileImageAttachmentResponse response = new ProfileImageAttachmentResponse(
@@ -136,6 +137,7 @@ public class ProfileImageAttachmentServiceImpl implements IProfileImageAttachmen
             imageProfile.setImageName(fileName);
             imageProfile.setAttachment(file.getBytes());
             imageProfile.setIsDefault(false);
+            imageProfile.setShowUrl(fileShowUri);
             ProfileImageAttachmentEntity profileImagePersisted = imageAttachmentRepository.saveAndFlush(imageProfile);
 
             log.info("[ DB Persisted ] Successfully updated profile image of the profile: " + profile.getProfileId());

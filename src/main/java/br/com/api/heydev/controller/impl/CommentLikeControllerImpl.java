@@ -1,6 +1,7 @@
 package br.com.api.heydev.controller.impl;
 
 import br.com.api.heydev.controller.ICommentLikeController;
+import br.com.api.heydev.dto.request.commentLike.CommentLikeRequest;
 import br.com.api.heydev.dto.response.like.LikeResponse;
 import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 import br.com.api.heydev.service.ICommentLikeService;
@@ -27,8 +28,8 @@ public class CommentLikeControllerImpl implements ICommentLikeController {
     }
 
     @PostMapping(value = "/create", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<LikeResponse> like(UUID userAccountId, UUID commentId) throws LikeAlreadyExistsException {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.like(userAccountId, commentId));
+    public ResponseEntity<LikeResponse> like(CommentLikeRequest request) throws LikeAlreadyExistsException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.like(request.userAccountId(), request.commentId()));
     }
 
     @DeleteMapping(value = "/delete/{likeId}")

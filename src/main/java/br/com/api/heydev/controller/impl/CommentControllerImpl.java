@@ -5,6 +5,7 @@ import br.com.api.heydev.dto.request.comment.CommentInCommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
+import br.com.api.heydev.dto.response.feed.CommentFeedResponse;
 import br.com.api.heydev.service.ICommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,9 +41,14 @@ public class CommentControllerImpl implements ICommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.commentInComment(request));
     }
 
-    @DeleteMapping(value = "delete/{commentId}")
+    @DeleteMapping(value = "/delete/{commentId}")
     public ResponseEntity<Void> deleteComment(UUID commentId) {
         service.deleteComment(commentId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/all/{postId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<CommentFeedResponse>> getAllCommentsByPostId(UUID postId) {
+        return ResponseEntity.ok(service.getAllCommentsByPostId(postId));
     }
 }

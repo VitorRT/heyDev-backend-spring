@@ -10,6 +10,8 @@ import br.com.api.heydev.dto.request.comment.CommentInCommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
+import br.com.api.heydev.dto.response.feed.AccountFeedResponse;
+import br.com.api.heydev.dto.response.feed.CommentFeedResponse;
 import br.com.api.heydev.enums.InternalTypeErrorCodesEnum;
 import br.com.api.heydev.service.ICommentService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -76,6 +78,54 @@ public class CommentServiceImpl implements ICommentService {
 
         log.info("[ DB Persist ] - create a comment in comment: {}", commentEntity.getCommentId());
         return new CommentResponse(persited);
+    }
+
+    @Override
+    public List<CommentFeedResponse> getAllCommentsByPostId(UUID postId) {
+        getPostEntityById(postId);
+        List<CommentFeedResponse> commentResponses = new ArrayList<>();
+        Map<UUID, CommentFeedResponse> commentMap = new HashMap<>();
+
+        List<CommentEntity> comments = commentRepository.findAllByPostId(postId);
+
+        for (CommentEntity comment : comments) {
+            UUID parentId = null;
+            CommentEntity parentComment = comment.getParentComment();
+            Long commentsQuantity = 0L;
+
+            if (parentComment != null) {
+                parentId = parentComment.getCommentId();
+            }
+
+            CommentFeedResponse commentResponse = new CommentFeedResponse(
+                    comment.getCommentId(),
+                    new AccountFeedResponse(
+                            comment.getUser().getUserId(),
+                            comment.getUser().getUsername(),
+                            comment.getUser().getProfile().getAttachment().getShowUrl()
+                    ),
+                    comment.getContent(),
+                    null,
+                    comment.getEdited(),
+                    commentRepository.countLikesByCommentId(comment.getCommentId()),
+                    commentsQuantity
+            );
+
+            if (parentId != null) {
+                CommentFeedResponse parentCommentResponse = commentMap.get(parentId);
+                if (parentCommentResponse != null) {
+                    parentCommentResponse.getChildComments().add(commentResponse);
+                    commentsQuantity = Long.valueOf(parentCommentResponse.getChildComments().size());
+                    parentCommentResponse.setCommentsQuantity(commentsQuantity);
+                }
+            } else {
+                commentResponses.add(commentResponse);
+            }
+
+            commentMap.put(comment.getCommentId(), commentResponse);
+        }
+
+        return commentResponses;
     }
 
     @Override

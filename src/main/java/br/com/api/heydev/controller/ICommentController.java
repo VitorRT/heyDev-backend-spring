@@ -4,6 +4,7 @@ import br.com.api.heydev.dto.request.comment.CommentInCommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentPostRequest;
 import br.com.api.heydev.dto.request.comment.CommentUpdateRequest;
 import br.com.api.heydev.dto.response.comment.CommentResponse;
+import br.com.api.heydev.dto.response.feed.CommentFeedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ICommentController {
@@ -64,4 +66,6 @@ public interface ICommentController {
             }
     )
     ResponseEntity<Void> deleteComment(@PathVariable("commentId") UUID commentId);
+
+    ResponseEntity<List<CommentFeedResponse>> getAllCommentsByPostId(@PathVariable("postId") UUID postId);
 }

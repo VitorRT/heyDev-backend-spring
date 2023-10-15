@@ -234,6 +234,12 @@ Aqui estão os endpoints disponíveis para recursos relacionados ao comentário 
    - Possíveis Status: 201 (Sucesso), 400 (Requisição Inválida)
 
 
+5. Listar todos os comentários de uma postagem
+   - Método: **GET**
+   - Endpoint: `/post/comment/all/{postId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
 ## Endpoints para Recursos de Curtida de uma Postagem
 Aqui estão os endpoints disponíveis para recursos relacionados a curtida de uma postagem:
 
@@ -262,4 +268,14 @@ Aqui estão os endpoints disponíveis para recursos relacionados a curtida de um
 2. Remover uma Curtida de um Comentário
    - Método: **DELETE**
    - Endpoint: `/comment/like/delete/{likeId}`
+   - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)
+
+
+
+## Endpoints para Recursos Feed de Postagens
+Aqui estão os endpoints disponíveis para recursos relacionados ao feed de postagens:
+
+1. Acessar feed de postagens criadas
+   - Método: **GET**
+   - Endpoint: `/feed`
    - Possíveis Status: 200 (Sucesso), 400 (Requisição Inválida)

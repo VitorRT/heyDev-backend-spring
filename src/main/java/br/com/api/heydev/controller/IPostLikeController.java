@@ -1,12 +1,15 @@
 package br.com.api.heydev.controller;
 
+import br.com.api.heydev.dto.request.postLike.PostLikeRequest;
 import br.com.api.heydev.dto.response.like.LikeResponse;
 import br.com.api.heydev.handler.exception.LikeAlreadyExistsException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
@@ -23,8 +26,7 @@ public interface IPostLikeController {
                     @ApiResponse(responseCode = "400", description = "Requisição inválida.")
             }
     )
-    ResponseEntity<LikeResponse> like(@RequestParam(name = "account_id", required = true) UUID userAccountId,
-                                      @RequestParam(name = "post_id", required = true) UUID postId)
+    ResponseEntity<LikeResponse> like(@RequestBody @Valid PostLikeRequest request)
             throws LikeAlreadyExistsException;
 
     @Operation(

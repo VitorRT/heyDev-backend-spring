@@ -29,4 +29,7 @@ public class ProfileEntity {
     @JoinColumn(name = "user_fk")
     private UserEntity user;
 
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ProfileImageAttachmentEntity attachment;
+
 }
