@@ -30,7 +30,7 @@ public class FeedServiceImpl implements IFeedService {
                     postEntity.getPostId(),
                     new AccountFeedResponse(
                             postEntity.getUser().getUserId(),
-                            postEntity.getUser().getUsername(),
+                            postEntity.getUser().getUsernameAccount(),
                             postEntity.getUser().getProfile().getAttachment().getShowUrl()
                     ),
                     postEntity.getContent(),

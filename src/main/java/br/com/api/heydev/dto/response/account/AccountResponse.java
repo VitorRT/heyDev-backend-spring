@@ -11,7 +11,7 @@ public record AccountResponse(UUID accountId, String username) {
     public AccountResponse(UserEntity userEntity) {
         this(
                 userEntity.getUserId(),
-                userEntity.getUsername()
+                userEntity.getUsernameAccount()
         );
     }
 }

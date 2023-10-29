@@ -10,12 +10,14 @@ import br.com.api.heydev.dto.response.account.AccountResponse;
 import br.com.api.heydev.dto.response.account.admin.AdminUserResponse;
 import br.com.api.heydev.enums.InternalTypeErrorCodesEnum;
 import br.com.api.heydev.enums.ProfileRole;
+import br.com.api.heydev.enums.UserRole;
 import br.com.api.heydev.handler.exception.EmailAlreadyExistsException;
 import br.com.api.heydev.handler.exception.UsernameAlreadyExistsException;
 import br.com.api.heydev.service.IProfileImageAttachmentService;
 import br.com.api.heydev.service.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -30,16 +32,20 @@ public class UserServiceImpl implements IUserService {
     private IProfileImageAttachmentRepository imageAttachmentRepository;
     private IProfileImageAttachmentService profileImageAttachmentService;
 
+    private PasswordEncoder encoder;
+
     @Deprecated
     public UserServiceImpl(
             IUserRepository userRepository,
             IProfileRepository profileRepository,
             IProfileImageAttachmentRepository imageAttachmentRepository,
-            IProfileImageAttachmentService profileImageAttachmentService) {
+            IProfileImageAttachmentService profileImageAttachmentService,
+            PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.imageAttachmentRepository = imageAttachmentRepository;
         this.profileImageAttachmentService = profileImageAttachmentService;
+        this.encoder = encoder;
     }
 
     @Override
@@ -48,6 +54,7 @@ public class UserServiceImpl implements IUserService {
         verifyUsernameAlreadyExist(request.username());
         verifyEmailAlreadyExist(request.email());
         UserEntity userEntity = toEntity(request);
+
         UserEntity userPersisted = this.userRepository.saveAndFlush(userEntity);
 
         ProfileEntity profile = toProfileEntity(request);
@@ -73,13 +80,13 @@ public class UserServiceImpl implements IUserService {
     public AccountResponse updateUsername(UUID userId, String username) throws UsernameAlreadyExistsException  {
         UserEntity userEntity = getUserById(userId);
 
-        if(userEntity.getUsername().equals(username)) {
+        if(userEntity.getUsernameAccount().equals(username)) {
             log.info("[ DB Persisted ] - Username successfully edited!");
             return toResponse(userEntity);
         }
 
         verifyUsernameAlreadyExist(username);
-        userEntity.setUsername(username);
+        userEntity.setUsernameAccount(username);
         UserEntity userPersisted = this.userRepository.saveAndFlush(userEntity);
 
         log.info("[ DB Persisted ] - Username successfully edited!");
@@ -104,9 +111,10 @@ public class UserServiceImpl implements IUserService {
 
     private UserEntity toEntity(AccountPostRequest request) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(request.username());
+        userEntity.setUsernameAccount(request.username());
         userEntity.setEmail(request.email());
-        userEntity.setPassword(request.password());
+        userEntity.setPassword(encoder.encode(request.password()));
+        userEntity.setRole(UserRole.ROLE_USER);
         return userEntity;
     }
 
@@ -123,7 +131,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     private void verifyUsernameAlreadyExist(String username) throws UsernameAlreadyExistsException {
-        if(this.userRepository.existsByUsername(username)) {
+        if(this.userRepository.existsByUsernameAccount(username)) {
             throw new UsernameAlreadyExistsException();
         }
     }

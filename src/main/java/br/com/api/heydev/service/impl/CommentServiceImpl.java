@@ -101,7 +101,7 @@ public class CommentServiceImpl implements ICommentService {
                     comment.getCommentId(),
                     new AccountFeedResponse(
                             comment.getUser().getUserId(),
-                            comment.getUser().getUsername(),
+                            comment.getUser().getUsernameAccount(),
                             comment.getUser().getProfile().getAttachment().getShowUrl()
                     ),
                     comment.getContent(),

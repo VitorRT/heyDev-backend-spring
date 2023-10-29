@@ -26,7 +26,9 @@ public enum InternalTypeErrorCodesEnum {
     E410021("410.021", "post id is mandatory."),
     E410022("410.022", "post like not found."),
     E410023("410.023", "like already exists."),
-    E410024("410.024", "comment like not fund.")
+    E410024("410.024", "comment like not fund."),
+    E410025("410.025", "token jwt invalid."),
+    E410026("410.026", "no value present")
     ;
 
     private final String code;
