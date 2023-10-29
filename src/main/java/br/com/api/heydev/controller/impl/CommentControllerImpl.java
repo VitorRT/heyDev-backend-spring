@@ -19,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/post/comment")
 @Tag(name = "Comment 💬")
+@CrossOrigin(origins = "http:localhost:3000")
 public class CommentControllerImpl implements ICommentController {
     private ICommentService service;
 
